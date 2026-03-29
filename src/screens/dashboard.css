@@ -71,75 +71,116 @@
   object-fit: cover;
 }
 
-/* ─── Vehicle Display Card ─── */
-.db-vehicle-card {
+/* ─── Vehicle Scoreboard Hero Card ─── */
+.db-score-hero {
   position: relative;
-  border-radius: 22px;
-  padding: 20px;
-  margin-bottom: 20px;
+  border-radius: 24px;
+  padding: 24px;
+  margin-bottom: 24px;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  animation: db-stagger-in 0.5s ease 0.05s both;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 140px;
+  transition: transform 0.2s ease;
+  box-shadow: 0 14px 30px rgba(79, 140, 255, 0.18);
 }
 
-.db-vehicle-card:active {
+.db-score-hero:active {
   transform: scale(0.97);
 }
 
-.db-vehicle-card-bg {
+.db-score-hero-gradient {
   position: absolute;
   inset: 0;
-  border-radius: 22px;
-  opacity: 0.12;
   z-index: 0;
 }
 
-.db-vehicle-card-glass {
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0.55);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255,255,255,0.5);
-  border-radius: 22px;
-  z-index: 1;
-}
-
-.db-vehicle-card-inner {
+.db-score-hero-left {
   position: relative;
   z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 16px;
+  flex: 1;
+  color: white;
+  padding-right: 90px;
 }
 
-.db-vehicle-img-container {
-  position: relative;
-  width: 72px;
-  height: 72px;
+.db-score-hero-tag {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  opacity: 0.75;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.db-score-hero-title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  margin-bottom: 16px;
+  color: white;
+}
+
+.db-score-hero-stats {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.db-score-hero-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.db-score-hero-stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.db-score-hero-stat-value {
+  font-size: 15px;
+  font-weight: 800;
+  color: white;
+  line-height: 1.2;
+}
+
+.db-score-hero-stat-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.db-score-hero-stat-divider {
+  width: 1px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.db-score-hero-fire {
+  font-size: 22px;
+}
+
+.db-score-hero-right {
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  width: 120px;
+  height: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.db-vehicle-pulse {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  opacity: 0.2;
-  animation: db-pulse-ring 3s ease-out infinite;
-}
-
-.db-vehicle-img-wrap {
-  position: relative;
-  z-index: 2;
-  animation: db-float 4s ease-in-out infinite;
-}
-
-.db-vehicle-emoji {
-  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.25));
+.db-score-hero-right img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
 }
 
 
@@ -261,47 +302,7 @@
 }
 
 
-/* ─── Progress + Streak Row ─── */
-.db-stats-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 20px;
-  animation: db-stagger-in 0.5s ease 0.1s both;
-}
-
-.db-stat-card {
-  border-radius: 20px;
-  padding: 18px 16px;
-  background: var(--bg-card);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-  border: 1px solid rgba(0,0,0,0.03);
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.db-stat-card:active {
-  transform: scale(0.96);
-}
-
-.db-stat-card-progress {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.db-stat-icon-wrap {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  flex-shrink: 0;
-}
+/* Old stats row styles removed for scoreboard design */
 
 
 .db-progress-ring svg {
@@ -449,155 +450,291 @@
   padding: 4px 0;
 }
 
-/* ─── Quick Actions Grid ─── */
-.db-actions-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+/* ─── Quick Actions Scrollable Row ─── */
+.db-actions-scroll-wrap {
+  display: flex;
   gap: 10px;
-  margin-bottom: 24px;
-  animation: db-stagger-in 0.5s ease 0.2s both;
+  overflow-x: auto;
+  margin: 0 -20px 24px;
+  padding: 5px 20px 20px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 
+.db-actions-scroll-wrap::-webkit-scrollbar { display: none; }
+
 .db-action-item {
+  flex: 0 0 90px;
+  aspect-ratio: 1/1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 14px 8px;
   border-radius: 18px;
-  background: var(--bg-card);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  border: 1px solid rgba(0,0,0,0.03);
-  cursor: pointer;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.02);
   transition: all 0.2s ease;
 }
 
-.db-action-item:active {
-  transform: scale(0.92);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-}
+.db-action-item:active { transform: scale(0.95); }
 
 .db-action-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
 }
 
 .db-action-label {
   font-size: 11px;
   font-weight: 700;
-  text-align: center;
-  line-height: 1.2;
+  color: var(--text-primary);
 }
 
-/* ─── Practice Topics Section ─── */
+/* ─── Compact Hero Cards (Practice & Mock Progress) ─── */
+.db-progress-hero {
+  position: relative;
+  width: 100%;
+  border-radius: 24px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  box-shadow: 0 14px 30px rgba(79, 140, 255, 0.2);
+}
+
+.db-progress-hero.practice {
+  background: linear-gradient(135deg, #4F8CFF 0%, #7B61FF 100%);
+}
+
+.db-progress-hero.mock {
+  background: linear-gradient(135deg, #7B61FF 0%, #B44FFF 100%);
+  box-shadow: 0 14px 30px rgba(123, 97, 255, 0.2);
+}
+
+.db-progress-hero:active {
+  transform: scale(0.97);
+}
+
+.db-progress-hero-content {
+  flex: 1;
+  position: relative;
+  z-index: 2;
+  color: white;
+}
+
+.db-progress-hero-label {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  opacity: 0.8;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.db-progress-hero-content h3 {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 4px;
+  letter-spacing: -0.3px;
+}
+
+.db-progress-hero-content p {
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.9;
+  margin-bottom: 16px;
+}
+
+.db-progress-hero-bar-container {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(4px);
+  border-radius: 4px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.db-progress-hero-bar-fill {
+  height: 100%;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.db-progress-hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.db-progress-hero-visual {
+  width: 110px;
+  height: 110px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.db-progress-hero-visual img {
+  width: 120%;
+  height: 120%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+  transform: scale(1.1) translateX(10px);
+}
+
+/* ─── Compact List Views ─── */
+.db-section-subheader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding: 0 4px;
+}
+
+.db-section-subheader h4 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.db-section-subheader button {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ─── Practice Topics Scroll ─── */
 .db-topics-scroll {
   display: flex;
-  gap: 10px;
+  flex-wrap: nowrap;
+  gap: 12px;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 4px;
-  margin-bottom: 24px;
+  margin: 0 -20px 24px;
+  padding: 0 20px 15px;
   scrollbar-width: none;
-  animation: db-stagger-in 0.5s ease 0.25s both;
+  -webkit-overflow-scrolling: touch;
 }
 
-.db-topics-scroll::-webkit-scrollbar {
-  display: none;
-}
+.db-topics-scroll::-webkit-scrollbar { display: none; }
 
-.db-topic-card {
-  min-width: 140px;
-  max-width: 140px;
-  scroll-snap-align: start;
-  border-radius: 18px;
-  padding: 16px 14px;
-  background: var(--bg-card);
-  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-  border: 1px solid rgba(0,0,0,0.03);
-  cursor: pointer;
-  transition: all 0.2s ease;
+.db-topic-card-compact {
+  flex: 0 0 160px;
+  background: white;
+  padding: 12px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.02);
   flex-shrink: 0;
 }
 
-.db-topic-card:active {
-  transform: scale(0.95);
-}
-
-.db-topic-icon {
+.db-topic-icon-wrap {
   width: 40px;
   height: 40px;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
   font-size: 20px;
+  flex-shrink: 0;
+}
+
+.db-topic-info {
+  overflow: hidden;
 }
 
 .db-topic-name {
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 6px;
-  line-height: 1.3;
-}
-
-.db-topic-progress-bar {
-  width: 100%;
-  height: 5px;
-  background: #F2F2F7;
-  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 2px;
+  white-space: nowrap;
   overflow: hidden;
-  margin-bottom: 4px;
+  text-overflow: ellipsis;
 }
 
-.db-topic-progress-fill {
-  height: 100%;
-  border-radius: 3px;
-  transition: width 0.5s ease;
-}
-
-.db-topic-progress-text {
-  font-size: 11px;
+.db-topic-percent {
+  font-size: 10px;
   font-weight: 700;
   color: var(--text-tertiary);
 }
 
-/* ─── Mock Tests Section ─── */
+/* ─── Mock Tests Scroll ─── */
 .db-mocks-scroll {
   display: flex;
-  gap: 10px;
+  flex-wrap: nowrap;
+  gap: 12px;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 4px;
-  margin-bottom: 24px;
+  margin: 0 -20px 24px;
+  padding: 0 20px 15px;
   scrollbar-width: none;
-  animation: db-stagger-in 0.5s ease 0.3s both;
+  -webkit-overflow-scrolling: touch;
 }
 
-.db-mocks-scroll::-webkit-scrollbar {
-  display: none;
-}
+.db-mocks-scroll::-webkit-scrollbar { display: none; }
 
-.db-mock-card {
-  min-width: 155px;
-  max-width: 155px;
-  scroll-snap-align: start;
-  border-radius: 18px;
+.db-mock-card-compact {
+  flex: 0 0 180px;
+  background: white;
   padding: 16px;
-  background: var(--bg-card);
-  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-  border: 1px solid rgba(0,0,0,0.03);
-  cursor: pointer;
-  transition: all 0.2s ease;
+  border-radius: 22px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.01);
   flex-shrink: 0;
-  position: relative;
+}
+
+.db-mock-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.db-mock-badge {
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.db-mock-score {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--text-secondary);
+}
+
+.db-mock-card-compact .db-mock-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-primary);
 }
 
 .db-mock-card:active {
@@ -652,98 +789,95 @@
   color: #4F8CFF;
 }
 
-/* ─── Quick Learning Reels Section ─── */
+.db-progress-hero.video {
+  background: linear-gradient(135deg, #00C9A7 0%, #00B4D8 100%);
+  box-shadow: 0 14px 30px rgba(0, 201, 167, 0.2);
+}
+
 .db-reels-scroll {
   display: flex;
-  gap: 10px;
+  flex-wrap: nowrap; /* Force horizontal row */
+  gap: 12px;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 4px;
-  margin-bottom: 24px;
+  margin: 0 -20px 24px;
+  padding: 0 20px 15px;
   scrollbar-width: none;
-  animation: db-stagger-in 0.5s ease 0.35s both;
+  -webkit-overflow-scrolling: touch;
 }
 
-.db-reels-scroll::-webkit-scrollbar {
-  display: none;
-}
+.db-reels-scroll::-webkit-scrollbar { display: none; }
 
-.db-reel-card {
-  min-width: 120px;
-  max-width: 120px;
-  scroll-snap-align: start;
-  border-radius: 18px;
+.db-reel-card-compact {
+  flex: 0 0 120px; /* Fixed width to force overflow */
+  background: white;
+  border-radius: 20px;
   overflow: hidden;
-  cursor: pointer;
-  position: relative;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.01);
   flex-shrink: 0;
-  aspect-ratio: 9/14;
-  transition: transform 0.2s ease;
 }
 
-.db-reel-card:active {
-  transform: scale(0.95);
-}
-
-.db-reel-thumb {
+.db-reel-thumb-placeholder {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.db-reel-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7) 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 10px;
-}
-
-.db-reel-play {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.25);
-  backdrop-filter: blur(8px);
+  aspect-ratio: 16/10;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 24px;
+  position: relative;
+}
+
+.db-reel-play-btn {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 2px;
+}
+
+.db-reel-info {
+  padding: 10px;
 }
 
 .db-reel-title {
   font-size: 11px;
-  font-weight: 700;
-  color: white;
-  line-height: 1.3;
+  font-weight: 800;
+  color: var(--text-primary);
   margin-bottom: 4px;
+  line-height: 1.2;
 }
 
-.db-reel-duration {
-  font-size: 10px;
-  font-weight: 600;
-  color: rgba(255,255,255,0.7);
+.db-reel-meta {
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-tertiary);
 }
 
 /* ─── Dark Mode Overrides ─── */
-.dark-mode .db-vehicle-card-glass {
-  background: rgba(28, 28, 30, 0.65);
-  border-color: rgba(255,255,255,0.08);
+.dark-mode .db-score-hero {
+  background: #1C1C1E;
 }
 
-.dark-mode .db-vehicle-badge {
-  background: rgba(255,255,255,0.1);
-  border-color: rgba(255,255,255,0.08);
-  color: rgba(255,255,255,0.9);
+.dark-mode .db-score-switch {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+}
+
+.dark-mode .db-score-pill {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark-mode .db-score-pill-divider {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .dark-mode .db-stat-card,

@@ -2,7 +2,8 @@ import React from 'react';
 import {
   Play, ClipboardList, AlertTriangle, MessageSquare,
   Flame, ChevronRight, Clock, Zap, Crown, BookOpen,
-  Video, Target, Shield, Car, Bike, Truck, Bus
+  Video, Target, Shield, Car, Bike, Truck, Bus,
+  Signpost, ScrollText
 } from 'lucide-react';
 import './dashboard.css';
 
@@ -76,7 +77,6 @@ const CircularProgress = ({ percent, size = 56, strokeWidth = 5, color = 'var(--
           strokeDasharray={circumference} strokeDashoffset={offset}
           strokeLinecap="round" style={{ transition: 'stroke-dashoffset 0.8s ease' }} />
       </svg>
-      <span className="db-progress-ring-label" style={{ color }}>{percent}%</span>
     </div>
   );
 };
@@ -84,8 +84,9 @@ const CircularProgress = ({ percent, size = 56, strokeWidth = 5, color = 'var(--
 /* ═══════════════════════════════════════════════════
    DASHBOARD SCREEN
    ═══════════════════════════════════════════════════ */
-const DashboardScreen = ({ navigate, userName = 'Alex', vehicleType = 'car' }) => {
+const DashboardScreen = ({ navigate, userName = 'Alex', vehicleType = 'car', onUpdateVehicle }) => {
   const vehicle = vehicleMap[vehicleType] || vehicleMap.car;
+
 
   return (
     <div className="screen animate-fade-in" style={{ padding: '20px 20px 0', background: 'var(--bg-main)' }}>
@@ -102,75 +103,162 @@ const DashboardScreen = ({ navigate, userName = 'Alex', vehicleType = 'car' }) =
           </div>
         </div>
 
-        {/* ──── 2. SELECTED VEHICLE DISPLAY ──── */}
-        <div className="db-vehicle-card" onClick={() => navigate('profile')}>
-
-          <div className="db-vehicle-card-bg" style={{ background: vehicle.gradient }} />
-          <div className="db-vehicle-card-glass" />
-          <div className="db-vehicle-card-inner">
-            <div className="db-vehicle-img-container">
-              <div className="db-vehicle-pulse" style={{ background: vehicle.color }} />
-              <div className="db-vehicle-img-wrap">
-                <span className="db-vehicle-emoji" style={{ fontSize: '42px' }}>{vehicle.emoji}</span>
+        {/* ──── 2. VEHICLE SCOREBOARD HERO ──── */}
+        <div className="db-score-hero" onClick={() => navigate('profile')}>
+          <div className="db-score-hero-gradient" style={{ background: vehicle.gradient }} />
+          
+          <div className="db-score-hero-left">
+            <span className="db-score-hero-tag">PREPARING FOR</span>
+            <h3 className="db-score-hero-title">{vehicle.label}</h3>
+            
+            <div className="db-score-hero-stats">
+              <div className="db-score-hero-stat">
+                <CircularProgress percent={70} color="white" size={32} strokeWidth={3} />
+                <div className="db-score-hero-stat-info">
+                  <span className="db-score-hero-stat-value">70%</span>
+                  <span className="db-score-hero-stat-label">Overall</span>
+                </div>
+              </div>
+              <div className="db-score-hero-stat-divider" />
+              <div className="db-score-hero-stat">
+                <div className="db-score-hero-fire">🔥</div>
+                <div className="db-score-hero-stat-info">
+                  <span className="db-score-hero-stat-value">5 Days</span>
+                  <span className="db-score-hero-stat-label">Streak</span>
+                </div>
               </div>
             </div>
-            <div className="db-vehicle-info">
-              <p className="db-vehicle-label">Preparing for</p>
-              <h3 className="db-vehicle-name">{vehicle.label}</h3>
-              <div className="db-vehicle-badge" style={{ color: vehicle.color }}>
-                <Zap size={11} fill={vehicle.color} strokeWidth={0} />
-                <span>DVSA Category {vehicleType === 'car' ? 'B' : vehicleType === 'motorcycle' ? 'A' : vehicleType === 'lgv' ? 'C' : 'D'}</span>
-              </div>
-            </div>
-            <ChevronRight size={18} color="#8E8E93" />
+          </div>
+          
+          <div className="db-score-hero-right">
+            <img src={vehicle.image} alt={vehicle.label} />
           </div>
         </div>
 
-        {/* ──── 3. NEXT STEP / SUGGESTION ──── */}
-        <div className="db-suggestion-card">
-          <div className="db-suggestion-content">
-            <div className="db-suggestion-header">
-              <Target size={14} color="#FF9500" />
-              <span>Recommended for you</span>
+   {/* ──── 5A. QUICK ACTIONS ──── */}
+        <div className="db-section-header" style={{ animation: 'db-stagger-in 0.5s ease 0.2s both' }}>
+          <h3 className="db-section-title">Quick Actions</h3>
+        </div>
+        <div className="db-actions-scroll-wrap">
+          <div className="db-action-item" onClick={() => navigate('practice')}>
+            <div className="db-action-icon" style={{ background: 'rgba(79, 140, 255, 0.12)' }}>
+              <BookOpen size={24} color="#4F8CFF" />
             </div>
-            <h4>Review "Hazard Awareness"</h4>
-            <p>You missed 3 questions on hazardous road conditions yesterday. Improving this will boost your pass rate!</p>
-            <button className="db-suggestion-btn" onClick={() => navigate('question', { topicId: 3 })}>
-              Quick Practice <ChevronRight size={14} />
+            <span className="db-action-label">Practice</span>
+          </div>
+          <div className="db-action-item" onClick={() => navigate('mock-list')}>
+            <div className="db-action-icon" style={{ background: 'rgba(123, 97, 255, 0.12)' }}>
+              <ClipboardList size={24} color="#7B61FF" />
+            </div>
+            <span className="db-action-label">Mock Test</span>
+          </div>
+          <div className="db-action-item" onClick={() => navigate('hazard')}>
+            <div className="db-action-icon" style={{ background: 'rgba(255, 149, 0, 0.12)' }}>
+              <AlertTriangle size={24} color="#FF9500" />
+            </div>
+            <span className="db-action-label">Hazard</span>
+          </div>
+          <div className="db-action-item" onClick={() => navigate('drive-coach')}>
+            <div className="db-action-icon" style={{ background: 'rgba(0, 209, 255, 0.12)' }}>
+              <MessageSquare size={24} color="#00B4D8" />
+            </div>
+            <span className="db-action-label">Drive Coach</span>
+          </div>
+          <div className="db-action-item" onClick={() => navigate('road-signs')}>
+            <div className="db-action-icon" style={{ background: 'rgba(255, 45, 85, 0.12)' }}>
+              <Signpost size={24} color="#FF2D55" />
+            </div>
+            <span className="db-action-label">Road Signs</span>
+          </div>
+          <div className="db-action-item" onClick={() => navigate('highway-code')}>
+            <div className="db-action-icon" style={{ background: 'rgba(52, 199, 89, 0.12)' }}>
+              <ScrollText size={24} color="#34C759" />
+            </div>
+            <span className="db-action-label">Highway Code</span>
+          </div>
+        </div>
+
+
+     
+
+        {/* ──── 4. PRACTICE PROGRESS HERO ──── */}
+        <div className="db-progress-hero practice" onClick={() => navigate('practice')}>
+          <div className="db-progress-hero-content">
+            <span className="db-progress-hero-label">PRACTICE PROGRESS</span>
+            <h3>14 Topics Total</h3>
+            <p>9 of 14 topics completed</p>
+            <div className="db-progress-hero-bar-container">
+              <div className="db-progress-hero-bar-fill" style={{ width: '64%' }} />
+            </div>
+            <button className="db-progress-hero-btn">
+              Continue Practice <ChevronRight size={14} />
             </button>
           </div>
-          <div className="db-suggestion-visual">
-             <CircularProgress percent={45} size={54} strokeWidth={4} color="#FF9500" />
+          <div className="db-progress-hero-visual">
+            <img src="/practice_hero_illu_1774783438550.png" alt="Practice Illustration" />
           </div>
         </div>
 
-        {/* ──── 4. PROGRESS + STREAK ROW ──── */}
-        <div className="db-stats-row">
-          <div className="db-stat-card" onClick={() => navigate('stats')}>
-            <div className="db-stat-card-progress">
-              <CircularProgress percent={70} color={vehicle.color} size={48} />
-              <div>
-                <p className="db-stat-title">Overall</p>
-                <h4 className="db-stat-value">70%</h4>
+        {/* ──── 5. TOPIC LIST ──── */}
+        <div className="db-section-subheader">
+          <h4>Explore Topics</h4>
+          <button onClick={() => navigate('practice')}>See All</button>
+        </div>
+        <div className="db-topics-scroll">
+          {practiceTopics.map((t, i) => (
+            <div key={i} className="db-topic-card-compact" onClick={() => navigate('question', { topicId: i + 1 })}>
+              <div className="db-topic-icon-wrap" style={{ background: `${t.color}15` }}>
+                {t.icon}
+              </div>
+              <div className="db-topic-info">
+                <p className="db-topic-name">{t.name}</p>
+                <span className="db-topic-percent">{t.progress}% done</span>
               </div>
             </div>
-          </div>
+          ))}
+        </div>
 
-          <div className="db-stat-card streak" style={{ background: '#FFF8EE' }} onClick={() => navigate('stats')}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div className="db-stat-icon-wrap" style={{ background: 'rgba(255, 149, 0, 0.1)' }}>
-                <span>🔥</span>
-              </div>
-              <div>
-                <p className="db-stat-title" style={{ color: '#D46B08' }}>Streak</p>
-                <h4 className="db-stat-value" style={{ color: '#D46B08' }}>5 Days</h4>
-              </div>
+        {/* ──── 6. MOCK TEST PROGRESS HERO ──── */}
+        <div className="db-progress-hero mock" onClick={() => navigate('mock-list')}>
+          <div className="db-progress-hero-content">
+            <span className="db-progress-hero-label" style={{ color: 'rgba(255,255,255,0.7)' }}>MOCK TEST PROGRESS</span>
+            <h3>15 Tests Total</h3>
+            <p>5 of 15 tests completed</p>
+            <div className="db-progress-hero-bar-container">
+              <div className="db-progress-hero-bar-fill" style={{ width: '33%', background: 'white' }} />
             </div>
+            <button className="db-progress-hero-btn">
+              Start Next Test <ChevronRight size={14} />
+            </button>
+          </div>
+          <div className="db-progress-hero-visual">
+            <img src="/mock_hero_illu_1774783463055.png" alt="Mock Illustration" />
           </div>
         </div>
 
+        {/* ──── 7. MOCK LIST ──── */}
+        <div className="db-section-subheader">
+          <h4>Mock Exams</h4>
+          <button onClick={() => navigate('mock-list')}>See All</button>
+        </div>
+        <div className="db-mocks-scroll">
+          {mockTests.map((m) => (
+            <div key={m.id} className="db-mock-card-compact" onClick={() => navigate('mock-instruction', { testId: m.id })}>
+              <div className="db-mock-header">
+                <span className="db-mock-badge" style={{ 
+                  background: m.status === 'completed' ? 'rgba(52, 199, 89, 0.08)' : 'rgba(0, 122, 255, 0.08)',
+                  color: m.status === 'completed' ? '#34C759' : '#007AFF'
+                }}>
+                  {m.status === 'completed' ? 'Done' : 'New'}
+                </span>
+                {m.score && <span className="db-mock-score">{m.score}</span>}
+              </div>
+              <p className="db-mock-title">{m.title}</p>
+            </div>
+          ))}
+        </div>
 
-        {/* ──── 4. PREMIUM BANNER ──── */}
+        {/* ──── 8. PREMIUM BANNER ──── */}
         <div className="db-premium-banner" onClick={() => navigate('subscribe')}>
           <div className="db-premium-shimmer" />
           <div className="db-premium-content">
@@ -181,119 +269,47 @@ const DashboardScreen = ({ navigate, userName = 'Alex', vehicleType = 'car' }) =
               <h4>Unlock Premium ✨</h4>
               <p>Unlimited tests · AI learning · Hazard videos</p>
             </div>
-            <button className="db-premium-cta" onClick={(e) => { e.stopPropagation(); navigate('subscribe'); }}>
-              Go Pro
+            <button className="db-premium-cta">Go Pro</button>
+          </div>
+        </div>
+
+        {/* ──── 9. VIDEO TRAINING HERO ──── */}
+        {/* <div className="db-progress-hero video" onClick={() => navigate('hazard')}>
+          <div className="db-progress-hero-content">
+            <span className="db-progress-hero-label" style={{ color: 'rgba(255,255,255,0.7)' }}>VIDEO TRAINING</span>
+            <h3>Hazard Awareness</h3>
+            <p>3 of 6 training videos watched</p>
+            <div className="db-progress-hero-bar-container">
+              <div className="db-progress-hero-bar-fill" style={{ width: '50%', background: '#00C9A7' }} />
+            </div>
+            <button className="db-progress-hero-btn">
+              Watch Next Video <ChevronRight size={14} />
             </button>
           </div>
-        </div>
-
-        {/* ──── 5A. QUICK ACTIONS ──── */}
-        <div className="db-section-header" style={{ animation: 'db-stagger-in 0.5s ease 0.2s both' }}>
-          <h3 className="db-section-title">Quick Actions</h3>
-        </div>
-        <div className="db-actions-grid">
-          <div className="db-action-item" onClick={() => navigate('practice')}>
-            <div className="db-action-icon" style={{ background: 'rgba(79, 140, 255, 0.12)' }}>
-              <BookOpen size={22} color="#4F8CFF" />
-            </div>
-            <span className="db-action-label">Practice</span>
+          <div className="db-progress-hero-visual">
+            <img src="/video_hero_illu_1774783645403.png" alt="Video Training" />
           </div>
-          <div className="db-action-item" onClick={() => navigate('mock-list')}>
-            <div className="db-action-icon" style={{ background: 'rgba(123, 97, 255, 0.12)' }}>
-              <ClipboardList size={22} color="#7B61FF" />
-            </div>
-            <span className="db-action-label">Mock Test</span>
-          </div>
-          <div className="db-action-item" onClick={() => navigate('hazard')}>
-            <div className="db-action-icon" style={{ background: 'rgba(255, 149, 0, 0.12)' }}>
-              <AlertTriangle size={22} color="#FF9500" />
-            </div>
-            <span className="db-action-label">Hazard</span>
-          </div>
-          <div className="db-action-item" onClick={() => navigate('drive-coach')}>
-            <div className="db-action-icon" style={{ background: 'rgba(0, 209, 255, 0.12)' }}>
-              <MessageSquare size={22} color="#00B4D8" />
-            </div>
-            <span className="db-action-label">Drive Coach</span>
-          </div>
+        </div> */}
 
-        </div>
-
-        {/* ──── 5B. PRACTICE TOPICS ──── */}
-        <div className="db-section-header" style={{ animation: 'db-stagger-in 0.5s ease 0.25s both' }}>
-          <h3 className="db-section-title">Practice by Topics</h3>
-          <button className="db-section-see-all" onClick={() => navigate('practice')}>See All</button>
-        </div>
-        <div className="db-topics-scroll">
-          {practiceTopics.map((t, i) => (
-            <div key={i} className="db-topic-card" onClick={() => navigate('question', { topicId: i + 1 })}>
-              <div className="db-topic-icon" style={{ background: `${t.color}15` }}>
-                {t.icon}
-              </div>
-              <p className="db-topic-name">{t.name}</p>
-              <div className="db-topic-progress-bar">
-                <div className="db-topic-progress-fill" style={{ width: `${t.progress}%`, background: t.color }} />
-              </div>
-              <p className="db-topic-progress-text">{t.progress}% done</p>
-            </div>
-          ))}
-        </div>
-
-        {/* ──── 5C. MOCK TESTS ──── */}
-        <div className="db-section-header" style={{ animation: 'db-stagger-in 0.5s ease 0.3s both' }}>
-          <h3 className="db-section-title">Mock Tests</h3>
-          <button className="db-section-see-all" onClick={() => navigate('mock-list')}>See All</button>
-        </div>
-        <div className="db-mocks-scroll">
-          {mockTests.map((m) => (
-            <div key={m.id} className="db-mock-card" onClick={() => navigate('mock-instruction', { testId: m.id })}>
-              <div className="db-mock-number" style={{
-                background: m.status === 'completed'
-                  ? 'linear-gradient(135deg, #34C759, #30D158)'
-                  : 'linear-gradient(135deg, #4F8CFF, #7B61FF)'
-              }}>
-                {m.id}
-              </div>
-              <p className="db-mock-title">{m.title}</p>
-              <p className="db-mock-meta">{m.questions} questions</p>
-              {m.status === 'completed' ? (
-                <div className="db-mock-status completed">
-                  <span>✓ {m.score}</span>
-                </div>
-              ) : (
-                <div className="db-mock-status new">
-                  <span>● New</span>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* ──── 5D. VIDEO QUIZ ──── */}
-        <div className="db-section-header" style={{ animation: 'db-stagger-in 0.5s ease 0.35s both' }}>
-          <h3 className="db-section-title">Video Quiz</h3>
-          <button className="db-section-see-all">See All</button>
+        {/* ──── 10. VIDEO REELS LIST ──── */}
+        <div className="db-section-subheader">
+          <h4>Video Quiz Reels</h4>
+          <button onClick={() => navigate('hazard')}>See All</button>
         </div>
         <div className="db-reels-scroll">
           {reels.map((r) => (
-            <div key={r.id} className="db-reel-card" onClick={() => navigate('video-question', { videoId: r.id })}>
-              {/* Gradient thumbnail placeholder */}
-              <div style={{
-                width: '100%', height: '100%',
-                background: `linear-gradient(150deg, ${r.color}22 0%, ${r.color}66 50%, ${r.color}DD 100%)`,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '40px',
-              }}>
+            <div key={r.id} className="db-reel-card-compact" onClick={() => navigate('video-question', { videoId: r.id })}>
+              <div className="db-reel-thumb-placeholder" style={{ background: `linear-gradient(135deg, ${r.color}22, ${r.color}44)` }}>
                 {r.icon}
-              </div>
-              <div className="db-reel-overlay">
-                <div className="db-reel-play">
-                  <Play size={16} color="white" fill="white" />
+                <div className="db-reel-play-btn">
+                  <Play size={12} fill="white" color="white" />
                 </div>
-                <p className="db-reel-title" style={{ whiteSpace: 'pre-line' }}>{r.title}</p>
-                <span className="db-reel-duration">
+              </div>
+              <div className="db-reel-info">
+                <p className="db-reel-title">{r.title.replace('\n', ' ')}</p>
+                <div className="db-reel-meta">
                   <Clock size={10} /> {r.duration}
-                </span>
+                </div>
               </div>
             </div>
           ))}

@@ -149,7 +149,14 @@ function App() {
 
       /* APP SCREENS */
       case 'home':
-        return <DashboardScreen navigate={navigate} userName={userData.name} vehicleType={userData.vehicle} />;
+        return (
+          <DashboardScreen 
+            navigate={navigate} 
+            userName={userData.name} 
+            vehicleType={userData.vehicle} 
+            onUpdateVehicle={(v) => setUserData(d => ({ ...d, vehicle: v }))}
+          />
+        );
 
       /* Practice */
       case 'practice':

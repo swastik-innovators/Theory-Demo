@@ -1,0 +1,339 @@
+/* ─── Drive Coach AI Premium Styles ─── */
+
+.dc-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #F2F2F7;
+  overflow: hidden;
+}
+
+/* ─── Onboarding ─── */
+.dc-onboarding {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.dc-avatar-container {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: white;
+  margin-bottom: 24px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dc-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  z-index: 2;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+  animation: dc-float 4s ease-in-out infinite;
+}
+
+.dc-avatar-pulse {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 4px solid rgba(79, 140, 255, 0.4);
+  opacity: 0.1;
+  animation: dc-pulse 2.5s ease-out infinite;
+  z-index: 1;
+}
+
+
+.dc-intro-title {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+  color: #1C1C1E;
+}
+
+.dc-intro-sub {
+  font-size: 16px;
+  color: #8E8E93;
+  font-weight: 500;
+  line-height: 1.5;
+  margin-bottom: 40px;
+}
+
+.dc-ob-card {
+  background: white;
+  border-radius: 28px;
+  padding: 24px;
+  width: 100%;
+  max-width: 320px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  animation: dc-slide-up 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+.dc-ob-card h4 {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.dc-ob-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dc-ob-btn {
+  padding: 16px;
+  border-radius: 18px;
+  background: #F2F2F7;
+  border: 2px solid transparent;
+  font-size: 15px;
+  font-weight: 800;
+  color: #1C1C1E;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dc-ob-btn:active {
+  transform: scale(0.96);
+}
+
+.dc-ob-btn.selected {
+  background: white;
+  border-color: var(--primary);
+  color: var(--primary);
+  box-shadow: 0 4px 12px rgba(79, 140, 255, 0.15);
+}
+
+/* ─── Chat Interface ─── */
+.dc-header {
+  padding: 16px 20px;
+  background: white;
+  border-bottom: 1px solid #F2F2F7;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.dc-header-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #F2F2F7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.dc-header-info h3 {
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 2px;
+}
+
+.dc-header-status {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #34C759;
+}
+
+.dc-header-status span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34C759;
+}
+
+.dc-chat-area {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dc-bubble {
+  max-width: 85%;
+  padding: 14px 18px;
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 500;
+  position: relative;
+  animation: dc-msg-in 0.4s ease both;
+}
+
+.dc-bubble.ai {
+  align-self: flex-start;
+  background: white;
+  color: #1C1C1E;
+  border-radius: 22px 22px 22px 4px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+}
+
+.dc-bubble.user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #4F8CFF 0%, #7B61FF 100%);
+  color: white;
+  border-radius: 22px 22px 4px 22px;
+  box-shadow: 0 8px 16px rgba(79, 140, 255, 0.2);
+}
+
+/* ─── Card responses ─── */
+.dc-card {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  border-left: 4px solid var(--primary);
+  margin-top: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+.dc-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.dc-card-content {
+  font-size: 13px;
+  color: #48484A;
+  line-height: 1.5;
+}
+
+/* ─── Footer & Input ─── */
+.dc-footer {
+  padding: 12px 20px 32px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid #F2F2F7;
+}
+
+.dc-suggestions {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  margin-bottom: 12px;
+  scrollbar-width: none;
+}
+
+.dc-suggestions::-webkit-scrollbar { display: none; }
+
+.dc-chip {
+  white-space: nowrap;
+  padding: 10px 16px;
+  border-radius: 20px;
+  background: white;
+  border: 1px solid #E5E5EA;
+  font-size: 13px;
+  font-weight: 700;
+  color: #48484A;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+  transition: all 0.2s;
+}
+
+.dc-chip:active {
+  transform: scale(0.95);
+  background: #F2F2F7;
+}
+
+.dc-input-wrap {
+  display: flex;
+  align-items: center;
+  background: #F2F2F7;
+  border-radius: 28px;
+  padding: 6px 6px 6px 16px;
+  gap: 12px;
+}
+
+.dc-input-wrap input {
+  flex: 1;
+  background: none;
+  border: none;
+  font-size: 15px;
+  font-weight: 500;
+  outline: none;
+}
+
+.dc-send-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dc-send-btn:active {
+  transform: scale(0.9);
+}
+
+/* ─── Animations ─── */
+@keyframes dc-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes dc-pulse {
+  0% { transform: scale(1); opacity: 0.3; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+@keyframes dc-msg-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes dc-slide-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.typing-dots {
+  display: flex;
+  gap: 4px;
+  padding: 4px 0;
+}
+
+.typing-dots span {
+  width: 6px;
+  height: 6px;
+  background: #C7C7CC;
+  border-radius: 50%;
+  animation: dc-typing 1s infinite alternate;
+}
+
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dc-typing {
+  from { opacity: 0.3; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}

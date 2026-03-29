@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Color Palette - DVSA Theme (Blue/Purple/White) */
+  --primary: #4F8CFF;
+  --secondary: #7B61FF;
+  --accent: #00D1FF;
+  --success: #34C759;
+  --warning: #FF9500;
+  --error: #FF3B30;
+  
+  --bg-main: #F2F2F7;
+  --bg-card: #FFFFFF;
+  --bg-glass: rgba(255, 255, 255, 0.7);
+  
+  --text-primary: #1C1C1E;
+  --text-secondary: #3A3A3C;
+  --text-tertiary: #8E8E93;
+  --text-on-brand: #FFFFFF;
+
+  --gradient-primary: linear-gradient(135deg, #4F8CFF 0%, #7B61FF 100%);
+  --gradient-surface: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%);
+
+  /* Spacing */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-10: 40px;
+
+  /* Radius */
+  --r-sm: 8px;
+  --r-md: 16px;
+  --r-lg: 24px;
+  --r-xl: 32px;
+  --r-full: 999px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-md: 0 8px 20px rgba(0,0,0,0.08);
+  --shadow-lg: 0 12px 30px rgba(0,0,0,0.12);
+  --shadow-brand: 0 10px 20px rgba(79, 140, 255, 0.2);
+
+  /* Transitions */
+  --t-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --t-normal: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.device-frame.dark-mode {
+  --bg-main: #000000;
+  --bg-card: #1C1C1E;
+  --bg-glass: rgba(28, 28, 30, 0.85);
+  --text-primary: #FFFFFF;
+  --text-secondary: #EBEBF5;
+  --text-tertiary: #8E8E93;
+  --bg-main: #000000;
+  --border-color: #38383A;
+}
+
+.device-frame {
+  transition: background-color var(--t-normal), color var(--t-normal);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background-color: #000;
+  color: var(--text-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Phone Frame */
+#root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.device-frame {
+  width: 390px;
+  height: 844px;
+  background-color: var(--bg-main);
+  border-radius: 40px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 0 12px #1C1C1E, 0 30px 60px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+.device-content {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  scrollbar-width: none;
+}
+
+.device-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* iOS Dynamic Island / Notch Placeholder */
+.notch {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 35px;
+  background: #1C1C1E;
+  border-radius: 20px;
+  z-index: 1000;
+}
+
+/* Base Components */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 24px;
+  border-radius: var(--r-md);
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: all var(--t-fast);
+  gap: 8px;
+  width: 100%;
+}
+
+.btn-primary {
+  background: var(--gradient-primary);
+  color: white;
+  box-shadow: var(--shadow-brand);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background: white;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.card {
+  background: var(--bg-card);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(0,0,0,0.02);
+}
+
+.glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+/* Animations */
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.animate-slide-up { animation: slideUp var(--t-normal) forwards; }
+.animate-fade-in { animation: fadeIn var(--t-normal) forwards; }
+.animate-scale-in { animation: scaleIn var(--t-normal) forwards; }

@@ -195,6 +195,38 @@ body {
   to { transform: scale(1); opacity: 1; }
 }
 
-.animate-slide-up { animation: slideUp var(--t-normal) forwards; }
-.animate-fade-in { animation: fadeIn var(--t-normal) forwards; }
+
 .animate-scale-in { animation: scaleIn var(--t-normal) forwards; }
+
+/* ─── Responsive Mobile View ─── */
+@media (max-width: 600px) {
+  body {
+    background-color: var(--bg-main);
+    display: block;
+    overflow: auto;
+  }
+
+  .device-frame {
+    width: 100% !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    position: relative !important;
+  }
+
+  .notch {
+    display: none !important;
+  }
+
+  .status-bar-fake {
+    display: none !important; /* On real mobile, users have their own status bar */
+  }
+
+  #root {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
